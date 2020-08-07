@@ -1,0 +1,165 @@
+@main: #464646;
+@white: #FFFFFF;
+@sub-bg: #C2C2C2;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+
+.nav {
+    margin-bottom: 40px;
+}
+
+.nav [type="checkbox"],
+.nav label.toggle-submenu {
+    display: none;
+}
+
+label.toggle-menu {
+    display: none;
+    position: relative;
+    background-color: @sub-bg;
+    text-transform: uppercase;
+    font-size: 25px;
+    padding: 5px 50px;
+    cursor: pointer;
+
+    .fa {
+        position: absolute;
+        top: 8px;
+        left: 12px;
+        font-size: 25px;
+    }
+}
+
+/* Главный список */
+.nav > ul {
+    display: flex;
+    justify-content: center;
+
+    li {
+        position: relative;
+
+        a {
+            display: block;
+            padding: 10px 30px;
+            font-size: 16px;
+            color: @main;
+            text-decoration: none;
+            transition: all .2s;
+            background-color: lighten(@sub-bg, 15%);
+
+            &:hover {
+                background-color: @main;
+                color: @white;
+                transition: all .2s;
+            }
+        }
+    }
+}
+
+/* Вложенные списки */
+.nav li ul {
+    display: none;
+    position: absolute;
+    min-width: 170px;
+}
+
+.nav li > ul li {
+    a {
+        background-color: @sub-bg;
+        padding: 10px 30px 10px 10px;
+    }
+}
+
+.nav li:hover > ul {
+    display: block;
+}
+
+/* Вложенные дважды и более */
+.nav li > ul li ul {
+    position: absolute;
+    right: -170px;
+    top: 0;
+}
+
+@media (max-width: 768px) {
+    .nav {
+        overflow: hidden;
+
+        ul {
+            display: none;
+        }
+
+        label.toggle-menu {
+            display: block;
+        }
+    }
+
+    .nav > ul li a {
+        padding: 10px;
+    }
+
+    .nav li > ul li {
+
+        ul {
+            position: absolute;
+            right: auto;
+            top: auto;
+
+            a {
+                padding: 10px 30px;
+            }
+        }
+
+        a {
+            padding: 10px 20px;
+        }
+    }
+
+    input.toggle-menu:checked + label.toggle-menu {
+        background-color: darken(@sub-bg, 20%);
+    }
+
+    input.toggle-menu:checked ~ ul,
+    input.toggle-submenu:checked ~ ul {
+        display: block;
+        position: relative;
+    }
+
+    .nav label.toggle-submenu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        display: block;
+    }
+
+    input.toggle-submenu:checked ~ a {
+        background-color: @sub-bg;
+    }
+
+    .nav label.toggle-submenu .fa {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+
+        &::before {
+            content: "\f0d7";
+            color: @main;
+        }
+    }
+
+    .nav input.toggle-submenu:checked ~ label.toggle-submenu .fa::before {
+        content: "\f0d8";
+    }
+}
